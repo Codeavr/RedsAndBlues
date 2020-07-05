@@ -16,6 +16,12 @@ namespace RedAndBlues
             var configLoader = new ResourcesConfigLoader<ConfigRoot>(_configPath);
 
             GameConfig config = (await configLoader.Load()).GameConfig;
+
+            var gameAreaSettings = new GameAreaSettings(config.GameAreaWidth, config.GameAreaHeight);
+
+            FindObjectOfType<GameAreaView>().Initialize(gameAreaSettings);
+
+            FindObjectOfType<CameraZoomToGameAreaBehaviour>().Initialize(gameAreaSettings);
         }
     }
 }
