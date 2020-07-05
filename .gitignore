@@ -2,3 +2,7 @@
 /Library
 /Logs
 /*.sln
+/.idea
+/*.csproj
+/*.DotSettings
+/obj
