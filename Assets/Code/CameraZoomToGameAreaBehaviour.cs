@@ -1,8 +1,7 @@
-﻿using System;
-using RedAndBlues.Field;
+﻿using RedsAndBlues.Code.GameArea;
 using UnityEngine;
 
-namespace RedAndBlues
+namespace RedsAndBlues.Code
 {
     [RequireComponent(typeof(Camera))]
     public class CameraZoomToGameAreaBehaviour : MonoBehaviour

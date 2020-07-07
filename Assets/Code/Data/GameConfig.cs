@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace RedAndBlues.Data
+namespace RedsAndBlues.Code.Data
 {
     [Serializable]
     public class GameConfig

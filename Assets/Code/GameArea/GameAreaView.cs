@@ -1,7 +1,6 @@
-﻿using RedAndBlues.Field;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace RedAndBlues.Field
+namespace RedsAndBlues.Code.GameArea
 {
     public class GameAreaView : MonoBehaviour
     {

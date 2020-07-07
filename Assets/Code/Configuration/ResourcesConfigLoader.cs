@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-namespace RedAndBlues.Configuration
+namespace RedsAndBlues.Code.Configuration
 {
     public class ResourcesConfigLoader<T>
     {

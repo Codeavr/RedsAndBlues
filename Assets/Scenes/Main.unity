@@ -261,6 +261,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _configPath: config
+  _blobMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  _blobMaterial: {fileID: 2100000, guid: 7b4d8f3106d82c6489a325326dae09f3, type: 2}
 --- !u!1001 &8861708156185993737
 PrefabInstance:
   m_ObjectHideFlags: 0

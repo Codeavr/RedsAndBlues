@@ -1,4 +1,4 @@
-﻿namespace RedAndBlues.Field
+﻿namespace RedsAndBlues.Code.GameArea
 {
     public struct GameAreaSettings
     {
