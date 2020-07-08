@@ -19,7 +19,10 @@ namespace RedsAndBlues.Code
         private Mesh _blobMesh;
 
         [SerializeField]
-        private Material _blobMaterial;
+        private Material _redBlobMaterial;
+        
+        [SerializeField]
+        private Material _blueBlobMaterial;
 
         private GameConfig _config;
         private EntityManager _manager;
@@ -48,7 +51,7 @@ namespace RedsAndBlues.Code
                 _config.MinUnitRadius, _config.MaxUnitRadius,
                 _config.MinUnitSpeed, _config.MaxUnitSpeed,
                 0.2f, -1, _gameAreaSettings,
-                _blobMesh, _blobMaterial
+                _blobMesh, _redBlobMaterial, _blueBlobMaterial
             );
 
             _blobsSpawner = new BlobsSpawner(_manager);

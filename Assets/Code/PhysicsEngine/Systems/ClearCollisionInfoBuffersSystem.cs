@@ -6,10 +6,6 @@ namespace RedsAndBlues.Code.PhysicsEngine.Systems
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public class ClearCollisionInfoBuffersSystem : ComponentSystem
     {
-        protected override void OnCreate()
-        {
-        }
-
         protected override void OnUpdate()
         {
             Entities

@@ -13,7 +13,8 @@ namespace RedsAndBlues.Code.Blobs
         public readonly float DestroyRadius;
         public readonly GameAreaSettings GameAreaSettings;
         public readonly Mesh Mesh;
-        public readonly Material Material;
+        public readonly Material RedBlobMaterial;
+        public readonly Material BlueBlobMaterial;
 
         public BlobSpawnSettings
         (
@@ -21,17 +22,18 @@ namespace RedsAndBlues.Code.Blobs
             float minUnitSpeed, float maxUnitSpeed,
             float destroyRadius,
             float zPosition,
-            GameAreaSettings gameAreaSettings, Mesh mesh, Material material)
+            GameAreaSettings gameAreaSettings, Mesh mesh, Material redBlobMaterial, Material blueBlobMaterial)
         {
             MinUnitRadius = minUnitRadius;
             MaxUnitRadius = maxUnitRadius;
             MinUnitSpeed = minUnitSpeed;
             MaxUnitSpeed = maxUnitSpeed;
-            GameAreaSettings = gameAreaSettings;
-            Mesh = mesh;
-            Material = material;
             DestroyRadius = destroyRadius;
             ZPosition = zPosition;
+            GameAreaSettings = gameAreaSettings;
+            Mesh = mesh;
+            RedBlobMaterial = redBlobMaterial;
+            BlueBlobMaterial = blueBlobMaterial;
         }
     }
 }

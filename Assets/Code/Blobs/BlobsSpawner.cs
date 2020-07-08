@@ -1,5 +1,6 @@
 ﻿using RedsAndBlues.Code.PhysicsEngine;
 using RedsAndBlues.Code.PhysicsEngine.Components;
+using RedsAndBlues.Code.Rendering;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -20,11 +21,13 @@ namespace RedsAndBlues.Code.Blobs
             _ballArchetype = _manager.CreateArchetype
             (
                 typeof(Translation),
-                typeof(LocalToWorld),
                 typeof(CircleColliderComponent),
                 typeof(CollisionInfoElementData),
                 typeof(VelocityComponent),
-                typeof(BlobPropertiesComponent)
+                typeof(BlobPropertiesComponent),
+                typeof(LocalToWorld),
+                typeof(SpriteRenderComponent),
+                typeof(Scale)
             );
         }
 
@@ -39,7 +42,7 @@ namespace RedsAndBlues.Code.Blobs
                 Random.Range(-.5f, .5f) * spawnSettings.GameAreaSettings.Height,
                 spawnSettings.ZPosition
             );
-            
+
             var entity = _manager.CreateEntity(_ballArchetype);
 
             _manager.SetComponentData(entity, new CircleColliderComponent
@@ -61,6 +64,12 @@ namespace RedsAndBlues.Code.Blobs
             _manager.SetComponentData(entity, new BlobPropertiesComponent
             {
                 DestroyRadius = spawnSettings.DestroyRadius
+            });
+
+            _manager.SetSharedComponentData(entity, new SpriteRenderComponent
+            {
+                Material = isRed ? spawnSettings.RedBlobMaterial : spawnSettings.BlueBlobMaterial,
+                Mesh = spawnSettings.Mesh
             });
 
             _spawnedCount++;
