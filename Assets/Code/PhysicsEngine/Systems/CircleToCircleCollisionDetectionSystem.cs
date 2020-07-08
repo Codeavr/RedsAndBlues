@@ -89,27 +89,29 @@ namespace RedsAndBlues.Code.PhysicsEngine.Systems
                 ))
                 {
                     CommandBuffer.AppendToBuffer(i, outerEntity, new CollisionInfoElementData
-                    {
-                        CollisionPivot = Translations[j].Value,
-                        OverlapAmount = overlapAmount,
-                        AnotherEntity = innerEntity
-                    });
+                    (
+                        innerEntity,
+                        Translations[j].Value,
+                        Colliders[j].Group,
+                        overlapAmount
+                    ));
 
                     CommandBuffer.AppendToBuffer(i, innerEntity, new CollisionInfoElementData
-                    {
-                        CollisionPivot = Translations[i].Value,
-                        OverlapAmount = overlapAmount,
-                        AnotherEntity = outerEntity
-                    });
+                    (
+                        outerEntity,
+                        Translations[i].Value,
+                        Colliders[i].Group,
+                        overlapAmount
+                    ));
 
                     if (Colliders[i].Group == CollisionLayer.Obstacle ||
                         Colliders[j].Group == CollisionLayer.Obstacle ||
                         Colliders[j].Group == Colliders[i].Group)
                     {
-                        CommandBuffer.AddComponent<FlipVelocityTag>(i, outerEntity);
+                        CommandBuffer.AddComponent<HandleCollisionWithBounceTag>(i, outerEntity);
                         CommandBuffer.AddComponent<RigidbodyCollisionTag>(i, outerEntity);
 
-                        CommandBuffer.AddComponent<FlipVelocityTag>(i, innerEntity);
+                        CommandBuffer.AddComponent<HandleCollisionWithBounceTag>(i, innerEntity);
                         CommandBuffer.AddComponent<RigidbodyCollisionTag>(i, innerEntity);
                     }
                     else

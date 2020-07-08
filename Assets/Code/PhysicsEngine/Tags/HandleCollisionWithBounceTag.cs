@@ -2,7 +2,7 @@
 
 namespace RedsAndBlues.Code.PhysicsEngine.Tags
 {
-    public struct FlipVelocityTag : IComponentData
+    public struct HandleCollisionWithBounceTag : IComponentData
     {
     }
 }

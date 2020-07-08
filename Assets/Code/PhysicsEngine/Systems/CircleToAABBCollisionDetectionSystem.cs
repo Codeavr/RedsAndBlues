@@ -121,13 +121,14 @@ namespace RedsAndBlues.Code.PhysicsEngine.Systems
                     ))
                     {
                         CommandBuffer.AppendToBuffer(jobIndex, circleEntity, new CollisionInfoElementData
-                        {
-                            CollisionPivot = closestPoint,
-                            OverlapAmount = overlapAmount,
-                            AnotherEntity = AABBEntities[i]
-                        });
+                        (
+                            AABBEntities[i],
+                            closestPoint,
+                            CollisionLayer.Obstacle,
+                            overlapAmount
+                        ));
 
-                        CommandBuffer.AddComponent<FlipVelocityTag>(jobIndex, circleEntity);
+                        CommandBuffer.AddComponent<HandleCollisionWithBounceTag>(jobIndex, circleEntity);
                         CommandBuffer.AddComponent<RigidbodyCollisionTag>(jobIndex, circleEntity);
                     }
                 }
