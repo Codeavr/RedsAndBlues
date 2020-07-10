@@ -4,13 +4,11 @@ using Unity.Entities;
 namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 {
     [UpdateInGroup(typeof(InitializationSystemGroup))]
-    public class ClearCollisionInfoBuffersSystem : ComponentSystem
+    public class ClearCollisionInfoBuffersSystem : SystemBase
     {
         protected override void OnUpdate()
         {
-            Entities
-                .WithAll<CollisionInfoElementData>()
-                .ForEach(entity => EntityManager.GetBuffer<CollisionInfoElementData>(entity).Clear());
+            Entities.ForEach((ref DynamicBuffer<CollisionInfoElementData> buffer) => buffer.Clear()).ScheduleParallel();
         }
     }
 }
