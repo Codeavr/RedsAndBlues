@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
 
-namespace RedsAndBlues.ECS.PhysicsEngine.Components
+namespace RedsAndBlues.ECS.General.Components
 {
     public struct VelocityComponent : IComponentData
     {

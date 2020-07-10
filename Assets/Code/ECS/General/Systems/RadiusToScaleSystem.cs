@@ -3,7 +3,7 @@ using RedsAndBlues.ECS.PhysicsEngine.Components;
 using Unity.Entities;
 using Unity.Transforms;
 
-namespace RedsAndBlues.ECS.PhysicsEngine.Systems
+namespace RedsAndBlues.ECS.General.Systems
 {
     [UpdateInGroup(typeof(InitializationSystemGroup)), UsedImplicitly]
     public class RadiusToScaleSystem : SystemBase

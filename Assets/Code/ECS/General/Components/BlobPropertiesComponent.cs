@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace RedsAndBlues.ECS.PhysicsEngine.Components
+namespace RedsAndBlues.ECS.General.Components
 {
     public struct BlobPropertiesComponent : IComponentData
     {

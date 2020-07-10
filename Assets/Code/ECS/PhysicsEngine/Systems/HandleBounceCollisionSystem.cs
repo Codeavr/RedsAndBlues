@@ -1,4 +1,5 @@
-﻿using RedsAndBlues.ECS.PhysicsEngine.Components;
+﻿using RedsAndBlues.ECS.General.Components;
+using RedsAndBlues.ECS.PhysicsEngine.Components;
 using RedsAndBlues.ECS.PhysicsEngine.Tags;
 using Unity.Entities;
 using Unity.Mathematics;

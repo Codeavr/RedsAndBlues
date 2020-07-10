@@ -1,10 +1,10 @@
 ﻿using JetBrains.Annotations;
-using RedsAndBlues.ECS.PhysicsEngine.Components;
-using RedsAndBlues.ECS.PhysicsEngine.Tags;
+using RedsAndBlues.ECS.General.Components;
+using RedsAndBlues.ECS.General.Tags;
 using Unity.Entities;
 using Unity.Transforms;
 
-namespace RedsAndBlues.ECS.PhysicsEngine.Systems
+namespace RedsAndBlues.ECS.General.Systems
 {
     [UpdateInGroup(typeof(SimulationSystemGroup)), UsedImplicitly]
     public class MovementSystem : SystemBase

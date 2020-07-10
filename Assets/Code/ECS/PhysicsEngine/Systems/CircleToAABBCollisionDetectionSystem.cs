@@ -1,6 +1,6 @@
 ﻿using RedsAndBlues.ECS.PhysicsEngine.Components;
 using RedsAndBlues.ECS.PhysicsEngine.Tags;
-using RedsAndBlues.ECS.PhysicsEngine.Utils;
+using RedsAndBlues.Utils;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;

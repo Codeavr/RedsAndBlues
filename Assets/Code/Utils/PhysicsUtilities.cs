@@ -1,6 +1,6 @@
 ﻿using Unity.Mathematics;
 
-namespace RedsAndBlues.ECS.PhysicsEngine.Utils
+namespace RedsAndBlues.Utils
 {
     public static class PhysicsUtility
     {

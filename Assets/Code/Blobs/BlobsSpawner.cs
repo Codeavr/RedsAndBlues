@@ -1,4 +1,6 @@
-﻿using RedsAndBlues.ECS.PhysicsEngine;
+﻿using RedsAndBlues.ECS.General.Components;
+using RedsAndBlues.ECS.General.Tags;
+using RedsAndBlues.ECS.PhysicsEngine;
 using RedsAndBlues.ECS.PhysicsEngine.Components;
 using RedsAndBlues.ECS.PhysicsEngine.Tags;
 using RedsAndBlues.ECS.Rendering;
