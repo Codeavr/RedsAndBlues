@@ -53,7 +53,7 @@ namespace RedsAndBlues.Code.Blobs
 
             _manager.SetComponentData(entity, new VelocityComponent
             {
-                Value = Quaternion.Euler(0, 0, Random.value * 360) * Vector3.right
+                Value = Quaternion.Euler(0, 0, Random.value * 360) * new Vector3(speed, 0f)
             });
 
             _manager.SetComponentData(entity, new Translation
