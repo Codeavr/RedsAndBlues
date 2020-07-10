@@ -3,6 +3,7 @@ using RedsAndBlues.Blobs;
 using RedsAndBlues.Configuration;
 using RedsAndBlues.Data;
 using RedsAndBlues.ECS.PhysicsEngine.Components;
+using RedsAndBlues.ECS.PhysicsEngine.Systems;
 using RedsAndBlues.GameArea;
 using Unity.Collections;
 using Unity.Entities;
@@ -28,12 +29,14 @@ namespace RedsAndBlues
         private GameAreaSettings _gameAreaSettings;
         private BlobSpawnSettings _blobSpawnSettings;
         private GameAreaBarrier _gameAreaBarrier;
+        private World _world;
 
         private async void Awake()
         {
             var configLoader = new ResourcesConfigLoader<ConfigRoot>(_configPath);
 
-            _manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            _world = World.DefaultGameObjectInjectionWorld;
+            _manager = _world.EntityManager;
 
             _config = (await configLoader.Load()).GameConfig;
 
@@ -54,19 +57,33 @@ namespace RedsAndBlues
 
             StartCoroutine(DelayedSpawningRoutine());
 
+
             IEnumerator DelayedSpawningRoutine()
             {
+                SetPhysicsSystemsState(false);
+
                 var delay = new WaitForSeconds(_config.UnitSpawnDelay / 1000f);
 
                 for (int i = 0; i < _config.NumUnitsToSpawn; i++)
                 {
                     _blobsSpawner.SpawnBlob(_blobSpawnSettings);
 
-                    yield return delay;
+                    if (_config.UnitSpawnDelay > 0)
+                    {
+                        yield return delay;
+                    }
                 }
+
+                SetPhysicsSystemsState(true);
 
                 _blobsSpawner.StartMovingAllTheBlobs();
             }
+        }
+
+        private void SetPhysicsSystemsState(bool state)
+        {
+            _world.GetExistingSystem<CircleToCircleCollisionDetectionSystem>().Enabled = state;
+            _world.GetExistingSystem<CircleToAABBCollisionDetectionSystem>().Enabled = state;
         }
 
         private void SetupGameArea()
