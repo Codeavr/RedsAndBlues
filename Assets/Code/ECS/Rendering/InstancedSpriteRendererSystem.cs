@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using RedsAndBlues.Code.PhysicsEngine.Components;
+using RedsAndBlues.Utils;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-namespace RedsAndBlues.Code.Rendering
+namespace RedsAndBlues.ECS.Rendering
 {
     [UpdateInGroup(typeof(PresentationSystemGroup))]
     public class InstancedSpriteRendererSystem : ComponentSystem
@@ -18,7 +17,7 @@ namespace RedsAndBlues.Code.Rendering
         private EntityQuery _spriteGroup;
 
         private List<SpriteRenderComponent> _uniqueComponents = new List<SpriteRenderComponent>();
-        private Mesh mesh;
+        private Mesh _mesh;
 
         protected override void OnCreate()
         {
@@ -34,7 +33,7 @@ namespace RedsAndBlues.Code.Rendering
 
             _spriteGroup = GetEntityQuery(query);
 
-            mesh = CreateQuad();
+            _mesh = MeshUtils.CreateQuad();
         }
 
         protected override void OnUpdate()
@@ -58,7 +57,7 @@ namespace RedsAndBlues.Code.Rendering
                     int length = math.min(_matrices.Length, transforms.Length - beginIndex);
                     DumpFloat4X4ToMatrix4X4Array(transforms, beginIndex, length);
 
-                    Graphics.DrawMeshInstanced(renderInfo.Mesh, 0, renderInfo.Material, _matrices, length);
+                    Graphics.DrawMeshInstanced(_mesh, 0, renderInfo.Material, _matrices, length);
 
                     beginIndex += length;
                 }
@@ -75,20 +74,6 @@ namespace RedsAndBlues.Code.Rendering
             {
                 _matrices[i] = transforms[beginIndex + i].Value;
             }
-        }
-
-        private static Mesh CreateQuad()
-        {
-            return new Mesh
-            {
-                vertices = new[]
-                {
-                    new Vector3(0, 0, 0),
-                    new Vector3(1, 0, 0),
-                    new Vector3(0, 1, 0),
-                    new Vector3(1, 1, 0)
-                }
-            };
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
 
-namespace RedsAndBlues.Code.PhysicsEngine.Components
+namespace RedsAndBlues.ECS.PhysicsEngine.Components
 {
     public struct AABBColliderComponent : IComponentData
     {

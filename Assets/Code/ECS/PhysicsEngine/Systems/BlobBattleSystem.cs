@@ -1,9 +1,9 @@
 ﻿using JetBrains.Annotations;
-using RedsAndBlues.Code.PhysicsEngine.Components;
-using RedsAndBlues.Code.PhysicsEngine.Tags;
+using RedsAndBlues.ECS.PhysicsEngine.Components;
+using RedsAndBlues.ECS.PhysicsEngine.Tags;
 using Unity.Entities;
 
-namespace RedsAndBlues.Code.PhysicsEngine.Systems
+namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 {
     [UpdateInGroup(typeof(PresentationSystemGroup)), UsedImplicitly]
     public class BlobBattleSystem : SystemBase

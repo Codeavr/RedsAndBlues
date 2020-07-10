@@ -1,7 +1,7 @@
-﻿using RedsAndBlues.Code.GameArea;
+﻿using RedsAndBlues.GameArea;
 using UnityEngine;
 
-namespace RedsAndBlues.Code.Blobs
+namespace RedsAndBlues.Blobs
 {
     public readonly struct BlobSpawnSettings
     {

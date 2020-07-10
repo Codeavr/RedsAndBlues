@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace RedsAndBlues.Code.PhysicsEngine.Components
+namespace RedsAndBlues.ECS.PhysicsEngine.Components
 {
     public struct CircleColliderComponent : IComponentData
     {

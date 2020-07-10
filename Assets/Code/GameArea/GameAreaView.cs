@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RedsAndBlues.Code.GameArea
+namespace RedsAndBlues.GameArea
 {
     public class GameAreaView : MonoBehaviour
     {

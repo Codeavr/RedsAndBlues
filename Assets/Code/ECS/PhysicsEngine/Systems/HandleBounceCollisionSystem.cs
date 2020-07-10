@@ -1,11 +1,10 @@
-﻿using RedsAndBlues.Code.PhysicsEngine.Components;
-using RedsAndBlues.Code.PhysicsEngine.Tags;
+﻿using RedsAndBlues.ECS.PhysicsEngine.Components;
+using RedsAndBlues.ECS.PhysicsEngine.Tags;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
-namespace RedsAndBlues.Code.PhysicsEngine.Systems
+namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 {
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderFirst = true)]
     public class HandleBounceCollisionSystem : SystemBase

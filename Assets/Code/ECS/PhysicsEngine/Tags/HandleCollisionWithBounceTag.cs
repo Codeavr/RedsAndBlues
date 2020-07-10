@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace RedsAndBlues.Code.PhysicsEngine.Tags
+namespace RedsAndBlues.ECS.PhysicsEngine.Tags
 {
     public struct HandleCollisionWithBounceTag : IComponentData
     {

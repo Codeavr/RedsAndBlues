@@ -1,9 +1,9 @@
 ﻿using JetBrains.Annotations;
-using RedsAndBlues.Code.PhysicsEngine.Components;
+using RedsAndBlues.ECS.PhysicsEngine.Components;
 using Unity.Entities;
 using Unity.Transforms;
 
-namespace RedsAndBlues.Code.PhysicsEngine.Systems
+namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 {
     [UpdateInGroup(typeof(InitializationSystemGroup)), UsedImplicitly]
     public class RadiusToScaleSystem : SystemBase

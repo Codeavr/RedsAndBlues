@@ -1,7 +1,7 @@
-﻿using RedsAndBlues.Code.PhysicsEngine.Components;
+﻿using RedsAndBlues.ECS.PhysicsEngine.Components;
 using Unity.Entities;
 
-namespace RedsAndBlues.Code.PhysicsEngine.Systems
+namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 {
     [UpdateInGroup(typeof(InitializationSystemGroup)), UpdateBefore(typeof(ClearCollisionInfoBuffersSystem))]
     public class AddCollisionInfoBufferToCollidersSystem : ComponentSystem

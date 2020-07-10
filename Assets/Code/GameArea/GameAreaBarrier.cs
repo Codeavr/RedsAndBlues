@@ -1,9 +1,9 @@
-﻿using RedsAndBlues.Code.PhysicsEngine.Components;
+﻿using RedsAndBlues.ECS.PhysicsEngine.Components;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace RedsAndBlues.Code.GameArea
+namespace RedsAndBlues.GameArea
 {
     public class GameAreaBarrier
     {

@@ -2,7 +2,7 @@
 using Unity.Entities;
 using UnityEngine;
 
-namespace RedsAndBlues.Code.Rendering
+namespace RedsAndBlues.ECS.Rendering
 {
     public struct SpriteRenderComponent : ISharedComponentData, IEquatable<SpriteRenderComponent>
     {

@@ -1,14 +1,15 @@
-﻿using RedsAndBlues.Code.Blobs;
-using RedsAndBlues.Code.Configuration;
-using RedsAndBlues.Code.Data;
-using RedsAndBlues.Code.GameArea;
-using RedsAndBlues.Code.PhysicsEngine.Components;
+﻿using System.Collections;
+using RedsAndBlues.Blobs;
+using RedsAndBlues.Configuration;
+using RedsAndBlues.Data;
+using RedsAndBlues.ECS.PhysicsEngine.Components;
+using RedsAndBlues.GameArea;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
 
-namespace RedsAndBlues.Code
+namespace RedsAndBlues
 {
     public class Bootstrap : MonoBehaviour
     {
@@ -20,7 +21,7 @@ namespace RedsAndBlues.Code
 
         [SerializeField]
         private Material _redBlobMaterial;
-        
+
         [SerializeField]
         private Material _blueBlobMaterial;
 
@@ -42,8 +43,7 @@ namespace RedsAndBlues.Code
             SetupGameArea();
             SetupBlobs();
         }
-
-
+        
         private void SetupBlobs()
         {
             _blobSpawnSettings = new BlobSpawnSettings
@@ -56,9 +56,20 @@ namespace RedsAndBlues.Code
 
             _blobsSpawner = new BlobsSpawner(_manager);
 
-            for (int i = 0; i < _config.NumUnitsToSpawn; i++)
+            StartCoroutine(DelayedSpawningRoutine());
+
+            IEnumerator DelayedSpawningRoutine()
             {
-                _blobsSpawner.SpawnBlob(_blobSpawnSettings);
+                var delay = new WaitForSeconds(_config.UnitSpawnDelay / 1000f);
+
+                for (int i = 0; i < _config.NumUnitsToSpawn; i++)
+                {
+                    _blobsSpawner.SpawnBlob(_blobSpawnSettings);
+
+                    yield return delay;
+                }
+
+                _blobsSpawner.StartMovingAllTheBlobs();
             }
         }
 

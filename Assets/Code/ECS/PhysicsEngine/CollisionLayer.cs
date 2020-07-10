@@ -1,4 +1,4 @@
-﻿namespace RedsAndBlues.Code.PhysicsEngine
+﻿namespace RedsAndBlues.ECS.PhysicsEngine
 {
     public enum CollisionLayer
     {

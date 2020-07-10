@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RedsAndBlues.Code.Data
+namespace RedsAndBlues.Data
 {
     [Serializable]
     public class ConfigRoot

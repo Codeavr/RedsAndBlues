@@ -1,13 +1,13 @@
-﻿using RedsAndBlues.Code.PhysicsEngine.Components;
-using RedsAndBlues.Code.PhysicsEngine.Tags;
-using RedsAndBlues.Code.PhysicsEngine.Utils;
+﻿using RedsAndBlues.ECS.PhysicsEngine.Components;
+using RedsAndBlues.ECS.PhysicsEngine.Tags;
+using RedsAndBlues.ECS.PhysicsEngine.Utils;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
 
-namespace RedsAndBlues.Code.PhysicsEngine.Systems
+namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 {
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public class CircleToCircleCollisionDetectionSystem : JobComponentSystem

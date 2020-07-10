@@ -1,7 +1,7 @@
 ﻿using Unity.Mathematics;
 using UnityEngine;
 
-namespace RedsAndBlues.Code.Utils
+namespace RedsAndBlues.Utils
 {
     public static class VectorDotsMathExtensions
     {

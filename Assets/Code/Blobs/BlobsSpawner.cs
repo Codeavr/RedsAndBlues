@@ -1,13 +1,14 @@
-﻿using RedsAndBlues.Code.PhysicsEngine;
-using RedsAndBlues.Code.PhysicsEngine.Components;
-using RedsAndBlues.Code.Rendering;
+﻿using RedsAndBlues.ECS.PhysicsEngine;
+using RedsAndBlues.ECS.PhysicsEngine.Components;
+using RedsAndBlues.ECS.PhysicsEngine.Tags;
+using RedsAndBlues.ECS.Rendering;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace RedsAndBlues.Code.Blobs
+namespace RedsAndBlues.Blobs
 {
     public class BlobsSpawner
     {
@@ -73,6 +74,12 @@ namespace RedsAndBlues.Code.Blobs
             });
 
             _spawnedCount++;
+        }
+
+        public void StartMovingAllTheBlobs()
+        {
+            var query = _manager.CreateEntityQuery(typeof(BlobPropertiesComponent));
+            _manager.AddComponent(query, typeof(IsMovingTag));
         }
     }
 }
