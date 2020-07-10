@@ -6,7 +6,6 @@ namespace RedsAndBlues.ECS.Rendering
 {
     public struct SpriteRenderComponent : ISharedComponentData, IEquatable<SpriteRenderComponent>
     {
-        public Mesh Mesh;
         public Material Material;
 
         public bool Equals(SpriteRenderComponent other)

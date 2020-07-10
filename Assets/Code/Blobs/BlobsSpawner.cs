@@ -71,8 +71,7 @@ namespace RedsAndBlues.Blobs
 
             _manager.SetSharedComponentData(entity, new SpriteRenderComponent
             {
-                Material = isRed ? spawnSettings.RedBlobMaterial : spawnSettings.BlueBlobMaterial,
-                Mesh = spawnSettings.Mesh
+                Material = isRed ? spawnSettings.RedBlobMaterial : spawnSettings.BlueBlobMaterial
             });
 
             _spawnedCount++;

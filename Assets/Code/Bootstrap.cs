@@ -17,9 +17,6 @@ namespace RedsAndBlues
         private string _configPath = "config";
 
         [SerializeField]
-        private Mesh _blobMesh;
-
-        [SerializeField]
         private Material _redBlobMaterial;
 
         [SerializeField]
@@ -43,15 +40,14 @@ namespace RedsAndBlues
             SetupGameArea();
             SetupBlobs();
         }
-        
+
         private void SetupBlobs()
         {
             _blobSpawnSettings = new BlobSpawnSettings
             (
                 _config.MinUnitRadius, _config.MaxUnitRadius,
                 _config.MinUnitSpeed, _config.MaxUnitSpeed,
-                0.2f, -1, _gameAreaSettings,
-                _blobMesh, _redBlobMaterial, _blueBlobMaterial
+                0.2f, -1, _gameAreaSettings, _redBlobMaterial, _blueBlobMaterial
             );
 
             _blobsSpawner = new BlobsSpawner(_manager);
