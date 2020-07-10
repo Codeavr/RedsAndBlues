@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using RedsAndBlues.ECS.General.Components;
 using RedsAndBlues.ECS.General.Tags;
+using RedsAndBlues.ECS.PhysicsEngine;
 using RedsAndBlues.ECS.PhysicsEngine.Components;
 using Unity.Entities;
 
@@ -43,7 +44,11 @@ namespace RedsAndBlues.ECS.General.Systems
 
                         for (int i = 0; i < collisionInfo.Length; i++)
                         {
-                            commandBuffer.DestroyEntity(collisionInfo[i].AnotherEntity);
+                            if (collisionInfo[i].AnotherLayer != CollisionLayer.Obstacle &&
+                                collisionInfo[i].AnotherLayer != collider.Group)
+                            {
+                                commandBuffer.DestroyEntity(collisionInfo[i].AnotherEntity);
+                            }
                         }
                     }
                     else
