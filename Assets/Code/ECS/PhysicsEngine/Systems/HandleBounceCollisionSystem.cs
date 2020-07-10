@@ -48,9 +48,13 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 
                         pivot /= collisions.Length;
 
-                        var direction = math.normalize(translation.Value - pivot);
+                        var direction = math.normalize(translation.Value.xy - pivot.xy);
+                        var velocity2d = velocity.Value.xy;
+                        var velocity1d = math.length(velocity2d);
 
-                        velocity.Value = math.reflect(velocity.Value, direction);
+                        var reflection = math.reflect(velocity2d / velocity1d, direction) * velocity1d;
+
+                        velocity.Value = new float3(reflection, velocity.Value.z);
 
                         commandBuffer.RemoveComponent<HandleCollisionWithBounceTag>(entity);
                     }).Run();
