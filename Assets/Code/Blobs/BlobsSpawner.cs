@@ -38,8 +38,8 @@ namespace RedsAndBlues.Code.Blobs
             bool isRed = _spawnedCount % 2 == 0;
             var position = new float3
             (
-                Random.Range(-.5f, .5f) * spawnSettings.GameAreaSettings.Width,
-                Random.Range(-.5f, .5f) * spawnSettings.GameAreaSettings.Height,
+                Random.Range(-.5f, .5f) * (spawnSettings.GameAreaSettings.Width - radius * 2),
+                Random.Range(-.5f, .5f) * (spawnSettings.GameAreaSettings.Height - radius * 2),
                 spawnSettings.ZPosition
             );
 
