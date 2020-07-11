@@ -8,7 +8,9 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref DynamicBuffer<CollisionInfoElementData> buffer) => buffer.Clear()).ScheduleParallel();
+            var job = Entities.ForEach((ref DynamicBuffer<CollisionInfoElementData> buffer) => buffer.Clear())
+                .ScheduleParallel(Dependency);
+            job.Complete();
         }
     }
 }

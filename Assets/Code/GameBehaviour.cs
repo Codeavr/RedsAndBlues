@@ -1,8 +1,8 @@
-﻿using System;
-using RedsAndBlues.Blobs;
+﻿using RedsAndBlues.Blobs;
 using RedsAndBlues.ECS.General.Components;
 using RedsAndBlues.ECS.General.Tags;
 using RedsAndBlues.ECS.PhysicsEngine.Systems;
+using RedsAndBlues.UI;
 using Unity.Entities;
 using UnityEngine;
 
@@ -11,33 +11,40 @@ namespace RedsAndBlues
     public class GameBehaviour : MonoBehaviour
     {
         private EntityManager _manager;
-        private World _world;
+        private GameWinObserver _observer;
+        private UiSaveLoadButtons _saveLoadButtons;
         private BlobsSpawner _blobsSpawner;
-        private GameWinObserver _winObserver;
+        private UiStartNewGameButton _startNewGameButton;
 
         public void Resolve
         (
             EntityManager manager,
-            World world,
+            GameWinObserver observer,
+            UiSaveLoadButtons saveLoadButtons,
             BlobsSpawner blobsSpawner,
-            GameWinObserver winObserver)
+            UiStartNewGameButton startNewGameButton)
         {
-            _manager = manager;
-            _world = world;
+            _startNewGameButton = startNewGameButton;
             _blobsSpawner = blobsSpawner;
-            _winObserver = winObserver;
+            _saveLoadButtons = saveLoadButtons;
+            _observer = observer;
+            _manager = manager;
 
             StartNewGame();
         }
 
+        [ContextMenu(nameof(StartNewGame))]
         public void StartNewGame()
         {
             StopAllCoroutines(); // disable delayed spawning routine
 
+            _saveLoadButtons.Interactable = false;
+            _startNewGameButton.Interactable = false;
+            _observer.IsEnabled = false;
+
             var blobsQuery = _manager.CreateEntityQuery(typeof(BlobPropertiesComponent));
             _manager.DestroyEntity(blobsQuery);
 
-            _winObserver.IsEnabled = false;
             _blobsSpawner.Reset();
             SetupBlobs();
         }
@@ -53,7 +60,10 @@ namespace RedsAndBlues
         {
             SetPhysicsSystemsState(true);
             StartUnitsMovement();
-            _winObserver.IsEnabled = true;
+
+            _saveLoadButtons.Interactable = true;
+            _observer.IsEnabled = true;
+            _startNewGameButton.Interactable = true;
 
             void StartUnitsMovement()
             {
@@ -64,8 +74,8 @@ namespace RedsAndBlues
 
         private void SetPhysicsSystemsState(bool state)
         {
-            _world.GetExistingSystem<CircleToCircleCollisionDetectionSystem>().Enabled = state;
-            _world.GetExistingSystem<CircleToAABBCollisionDetectionSystem>().Enabled = state;
+            _manager.World.GetExistingSystem<CircleToCircleCollisionDetectionSystem>().Enabled = state;
+            _manager.World.GetExistingSystem<CircleToAABBCollisionDetectionSystem>().Enabled = state;
         }
     }
 }

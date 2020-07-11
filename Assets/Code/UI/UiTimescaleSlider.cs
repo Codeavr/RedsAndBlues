@@ -40,12 +40,12 @@ namespace RedsAndBlues.UI
 
         private void Redraw()
         {
-            _currentValueLabel.text = Time.timeScale.ToString();
+            _currentValueLabel.text = Simulation.Speed.ToString();
 
             _minValueLabel.text = _minMaxValues.x.ToString();
             _maxValueLabel.text = _minMaxValues.y.ToString();
 
-            float t = Mathf.InverseLerp(_minMaxValues.x, _minMaxValues.y, Time.timeScale);
+            float t = Mathf.InverseLerp(_minMaxValues.x, _minMaxValues.y, Simulation.Speed);
 
             _currentValueLabel.color = Color.Lerp(_minValueLabel.color, _maxValueLabel.color, t);
         }
@@ -62,7 +62,7 @@ namespace RedsAndBlues.UI
                 value = (float) Math.Round(value, 1, MidpointRounding.AwayFromZero);
             }
 
-            Time.timeScale = Mathf.Clamp(value, _minMaxValues.x, _minMaxValues.y);
+            Simulation.Speed = Mathf.Clamp(value, _minMaxValues.x, _minMaxValues.y);
 
             Redraw();
         }
@@ -71,7 +71,7 @@ namespace RedsAndBlues.UI
         {
             if (Application.isPlaying) return;
 
-            _slider.value = Time.timeScale;
+            _slider.value = Simulation.Speed;
 
             _slider.minValue = _minMaxValues.x;
             _slider.maxValue = _minMaxValues.y;

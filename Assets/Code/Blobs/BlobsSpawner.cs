@@ -102,7 +102,9 @@ namespace RedsAndBlues.Blobs
 
             _manager.SetSharedComponentData(entity, new SpriteRenderComponent
             {
-                Material = isRed ? _settings.RedBlobMaterial : _settings.BlueBlobMaterial
+                MaterialId = isRed
+                    ? _settings.RedBlobMaterial.name.GetHashCode()
+                    : _settings.BlueBlobMaterial.name.GetHashCode()
             });
 
             _spawnedCount++;

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RedsAndBlues.Blobs;
 using RedsAndBlues.Configuration;
 using RedsAndBlues.Data;
-using RedsAndBlues.ECS.PhysicsEngine.Components;
-using RedsAndBlues.ECS.PhysicsEngine.Systems;
+using RedsAndBlues.ECS.Rendering;
 using RedsAndBlues.GameArea;
 using RedsAndBlues.UI;
-using Unity.Collections;
 using Unity.Entities;
-using Unity.Transforms;
 using UnityEngine;
 
 namespace RedsAndBlues
@@ -50,6 +45,11 @@ namespace RedsAndBlues
             );
 
             // DI
+            manager.World.GetExistingSystem<InstancedSpriteRendererSystem>()
+                .RegisterMaterial(_redBlobMaterial.name.GetHashCode(), _redBlobMaterial);
+            manager.World.GetExistingSystem<InstancedSpriteRendererSystem>()
+                .RegisterMaterial(_blueBlobMaterial.name.GetHashCode(), _blueBlobMaterial);
+
             var _ = new GameAreaBarrier(manager, gameAreaSettings);
 
             FindObjectOfType<GameAreaView>().Resolve(gameAreaSettings);
@@ -61,13 +61,19 @@ namespace RedsAndBlues
             var winObserver = new GameWinObserver(manager);
             _tickables.Add(winObserver);
 
+            var gameSaveSystem = new GameSaveSystem(new SaveStorage());
+
+            var uiSaveLoadButtons = FindObjectOfType<UiSaveLoadButtons>();
+            uiSaveLoadButtons.Resolve(gameSaveSystem);
+
+            var startNewGameButton = FindObjectOfType<UiStartNewGameButton>();
             var gameBehaviour = FindObjectOfType<GameBehaviour>();
-            gameBehaviour.Resolve(manager, world, blobsSpawner, winObserver);
+            gameBehaviour.Resolve(manager, winObserver, uiSaveLoadButtons, blobsSpawner, startNewGameButton);
+            startNewGameButton.Resolve(gameBehaviour);
 
             FindObjectOfType<UiPopupsController>().Resolve(winObserver, gameBehaviour);
 
             FindObjectOfType<UiGameInfo>().Resolve(winObserver);
-
 
             FindObjectOfType<GizmosDebugger>().Resolve(manager);
 

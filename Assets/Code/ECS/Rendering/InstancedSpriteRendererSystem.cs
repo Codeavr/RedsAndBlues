@@ -17,7 +17,13 @@ namespace RedsAndBlues.ECS.Rendering
         private EntityQuery _spriteGroup;
 
         private List<SpriteRenderComponent> _uniqueComponents = new List<SpriteRenderComponent>();
+        private Dictionary<int, Material> _materials = new Dictionary<int, Material>();
         private Mesh _mesh;
+
+        public void RegisterMaterial(int id, Material material)
+        {
+            _materials.Add(id, material);
+        }
 
         protected override void OnCreate()
         {
@@ -41,14 +47,12 @@ namespace RedsAndBlues.ECS.Rendering
             EntityManager.GetAllUniqueSharedComponentData(_uniqueComponents);
             foreach (var renderInfo in _uniqueComponents)
             {
-                if (renderInfo.Material == null) continue;
+                if (renderInfo.MaterialId == 0) continue;
 
-                if (!renderInfo.Material.enableInstancing)
-                {
-                    renderInfo.Material.enableInstancing = true;
-                }
+                var material = _materials[renderInfo.MaterialId];
 
                 _spriteGroup.SetSharedComponentFilter(renderInfo);
+
                 var transforms = _spriteGroup.ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
 
                 int beginIndex = 0;
@@ -57,7 +61,7 @@ namespace RedsAndBlues.ECS.Rendering
                     int length = math.min(_matrices.Length, transforms.Length - beginIndex);
                     DumpFloat4X4ToMatrix4X4Array(transforms, beginIndex, length);
 
-                    Graphics.DrawMeshInstanced(_mesh, 0, renderInfo.Material, _matrices, length);
+                    Graphics.DrawMeshInstanced(_mesh, 0, material, _matrices, length);
 
                     beginIndex += length;
                 }

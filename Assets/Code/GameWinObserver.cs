@@ -1,6 +1,5 @@
 ﻿using System;
 using RedsAndBlues.Blobs;
-using RedsAndBlues.ECS.General.Components;
 using RedsAndBlues.ECS.PhysicsEngine;
 using RedsAndBlues.ECS.PhysicsEngine.Components;
 using Unity.Collections;

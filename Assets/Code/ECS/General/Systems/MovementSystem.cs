@@ -11,7 +11,7 @@ namespace RedsAndBlues.ECS.General.Systems
     {
         protected override void OnUpdate()
         {
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = Time.DeltaTime * Simulation.Speed;
 
             Entities
                 .WithAll<IsMovingTag>()
