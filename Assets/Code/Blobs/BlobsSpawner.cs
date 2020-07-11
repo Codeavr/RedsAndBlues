@@ -112,16 +112,18 @@ namespace RedsAndBlues.Blobs
 
         public IEnumerator StartDelayedSpawningRoutine()
         {
-            var delay = new WaitForSeconds(_settings.Delay);
+            float currentTime = Time.time;
 
             for (int i = 0; i < _settings.Capacity; i++)
             {
+                if (currentTime > Time.time)
+                {
+                    yield return null;
+                }
+
                 SpawnBlob();
 
-                if (_settings.Delay > 0)
-                {
-                    yield return delay;
-                }
+                currentTime += _settings.Delay / Simulation.Speed;
             }
 
             ReachedCapacityEvent?.Invoke();
