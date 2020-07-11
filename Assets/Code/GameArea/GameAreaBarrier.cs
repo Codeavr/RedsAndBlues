@@ -7,7 +7,7 @@ namespace RedsAndBlues.GameArea
 {
     public class GameAreaBarrier
     {
-        private const float BarrierWallWidth = 1f;
+        private const float BarrierWallWidth = 10f;
 
         public GameAreaBarrier(EntityManager manager, GameAreaSettings settings)
         {

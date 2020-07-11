@@ -13,7 +13,7 @@ namespace RedsAndBlues.GameArea
         [SerializeField]
         private Vector2 _sizeOffset;
 
-        public void Initialize(GameAreaSettings settings)
+        public void Resolve(GameAreaSettings settings)
         {
             var finalSize = _baseSize;
             finalSize.Scale(new Vector2(settings.Width, settings.Height));

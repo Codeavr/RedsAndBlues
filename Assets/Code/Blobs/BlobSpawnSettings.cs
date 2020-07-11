@@ -1,10 +1,13 @@
 ﻿using RedsAndBlues.GameArea;
+using Unity.Collections;
 using UnityEngine;
 
 namespace RedsAndBlues.Blobs
 {
-    public readonly struct BlobSpawnSettings
+    public readonly struct BlobsSpawningSettings
     {
+        public readonly int Capacity;
+        public readonly float Delay;
         public readonly float MinUnitRadius;
         public readonly float MaxUnitRadius;
         public readonly float MinUnitSpeed;
@@ -15,8 +18,9 @@ namespace RedsAndBlues.Blobs
         public readonly Material RedBlobMaterial;
         public readonly Material BlueBlobMaterial;
 
-        public BlobSpawnSettings
+        public BlobsSpawningSettings
         (
+            int capacity, float delay,
             float minUnitRadius, float maxUnitRadius,
             float minUnitSpeed, float maxUnitSpeed,
             float destroyRadius,
@@ -24,6 +28,8 @@ namespace RedsAndBlues.Blobs
             GameAreaSettings gameAreaSettings,
             Material redBlobMaterial, Material blueBlobMaterial)
         {
+            Capacity = capacity;
+            Delay = delay;
             MinUnitRadius = minUnitRadius;
             MaxUnitRadius = maxUnitRadius;
             MinUnitSpeed = minUnitSpeed;

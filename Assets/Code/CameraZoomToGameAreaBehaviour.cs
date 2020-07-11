@@ -9,6 +9,11 @@ namespace RedsAndBlues
         private Camera _camera;
         private GameAreaSettings _areaSettings;
 
+        public void Resolve(GameAreaSettings areaSettings)
+        {
+            _areaSettings = areaSettings;
+        }
+
         private void Awake()
         {
             _camera = GetComponent<Camera>();
@@ -17,11 +22,6 @@ namespace RedsAndBlues
         private void Update()
         {
             Scale();
-        }
-
-        public void Initialize(GameAreaSettings areaSettings)
-        {
-            _areaSettings = areaSettings;
         }
 
         private void Scale()

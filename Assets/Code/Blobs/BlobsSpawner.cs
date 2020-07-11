@@ -1,4 +1,6 @@
-﻿using RedsAndBlues.ECS.General.Components;
+﻿using System;
+using System.Collections;
+using RedsAndBlues.ECS.General.Components;
 using RedsAndBlues.ECS.General.Tags;
 using RedsAndBlues.ECS.PhysicsEngine;
 using RedsAndBlues.ECS.PhysicsEngine.Components;
@@ -19,13 +21,18 @@ namespace RedsAndBlues.Blobs
     public class BlobsSpawner
     {
         private const int MaxFindPositionAttempts = 32;
+
+        public event Action ReachedCapacityEvent;
+
         private EntityArchetype _ballArchetype;
         private EntityManager _manager;
         private int _spawnedCount;
         private EntityQuery _circlesQuery;
+        private BlobsSpawningSettings _settings;
 
-        public BlobsSpawner(EntityManager manager)
+        public BlobsSpawner(EntityManager manager, BlobsSpawningSettings blobsSpawningSettings)
         {
+            _settings = blobsSpawningSettings;
             _manager = manager;
             _circlesQuery = _manager.CreateEntityQuery(typeof(CircleColliderComponent), typeof(Translation));
 
@@ -42,19 +49,24 @@ namespace RedsAndBlues.Blobs
             );
         }
 
-        public void SpawnBlob(BlobSpawnSettings spawnSettings)
+        public void SpawnBlob()
         {
-            var speed = Random.Range(spawnSettings.MinUnitSpeed, spawnSettings.MaxUnitSpeed);
-            var radius = Random.Range(spawnSettings.MinUnitRadius, spawnSettings.MaxUnitRadius);
+            if (_spawnedCount >= _settings.Capacity)
+            {
+                throw new Exception("Reached capacity");
+            }
+
+            var speed = Random.Range(_settings.MinUnitSpeed, _settings.MaxUnitSpeed);
+            var radius = Random.Range(_settings.MinUnitRadius, _settings.MaxUnitRadius);
             bool isRed = _spawnedCount % 2 == 0;
 
             var area = new float2
             (
-                spawnSettings.GameAreaSettings.Width - radius * 2,
-                spawnSettings.GameAreaSettings.Height - radius * 2
+                _settings.GameAreaSettings.Width - radius * 2,
+                _settings.GameAreaSettings.Height - radius * 2
             );
 
-            var position = FindSuitablePosition(area, radius) + new float3(0, 0, spawnSettings.ZPosition);
+            var position = FindSuitablePosition(area, radius) + new float3(0, 0, _settings.ZPosition);
 
             var entity = _manager.CreateEntity(_ballArchetype);
 
@@ -76,21 +88,32 @@ namespace RedsAndBlues.Blobs
 
             _manager.SetComponentData(entity, new BlobPropertiesComponent
             {
-                DestroyRadius = spawnSettings.DestroyRadius
+                DestroyRadius = _settings.DestroyRadius
             });
 
             _manager.SetSharedComponentData(entity, new SpriteRenderComponent
             {
-                Material = isRed ? spawnSettings.RedBlobMaterial : spawnSettings.BlueBlobMaterial
+                Material = isRed ? _settings.RedBlobMaterial : _settings.BlueBlobMaterial
             });
 
             _spawnedCount++;
         }
 
-        public void StartMovingAllTheBlobs()
+        public IEnumerator StartDelayedSpawningRoutine()
         {
-            var query = _manager.CreateEntityQuery(typeof(BlobPropertiesComponent));
-            _manager.AddComponent(query, typeof(IsMovingTag));
+            var delay = new WaitForSeconds(_settings.Delay);
+
+            for (int i = 0; i < _settings.Capacity; i++)
+            {
+                SpawnBlob();
+
+                if (_settings.Delay > 0)
+                {
+                    yield return delay;
+                }
+            }
+
+            ReachedCapacityEvent?.Invoke();
         }
 
         private float3 FindSuitablePosition(float2 area, float circleRadius)

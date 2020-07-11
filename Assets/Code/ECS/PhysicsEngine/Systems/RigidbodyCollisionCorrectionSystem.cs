@@ -42,7 +42,10 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
                             position += direction * offset;
                         }
 
-                        translation.Value = position;
+                        if (!math.isnan(position.x))
+                        {
+                            translation.Value = position;
+                        }
 
                         commandBuffer.RemoveComponent<RigidbodyCollisionTag>(entity);
                     }).Run();

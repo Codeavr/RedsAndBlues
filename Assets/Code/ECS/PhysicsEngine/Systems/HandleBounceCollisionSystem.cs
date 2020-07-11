@@ -4,6 +4,7 @@ using RedsAndBlues.ECS.PhysicsEngine.Tags;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 {
@@ -49,6 +50,13 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
                         pivot /= collisions.Length;
 
                         var direction = math.normalize(translation.Value.xy - pivot.xy);
+                        
+                        if (math.isnan(direction.x))
+                        {
+                            commandBuffer.RemoveComponent<HandleCollisionWithBounceTag>(entity);
+                            return;
+                        }
+
                         var velocity2d = velocity.Value.xy;
                         var velocity1d = math.length(velocity2d);
 
