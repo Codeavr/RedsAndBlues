@@ -61,11 +61,13 @@ namespace RedsAndBlues
             var winObserver = new GameWinObserver(manager);
             _tickables.Add(winObserver);
 
-            FindObjectOfType<UiPopupsController>().Resolve(winObserver);
+            var gameBehaviour = FindObjectOfType<GameBehaviour>();
+            gameBehaviour.Resolve(manager, world, blobsSpawner, winObserver);
+
+            FindObjectOfType<UiPopupsController>().Resolve(winObserver, gameBehaviour);
 
             FindObjectOfType<UiGameInfo>().Resolve(winObserver);
 
-            FindObjectOfType<GameBehaviour>().Resolve(manager, world, blobsSpawner, winObserver);
 
             FindObjectOfType<GizmosDebugger>().Resolve(manager);
 

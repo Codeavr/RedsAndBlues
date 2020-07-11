@@ -7,28 +7,30 @@ namespace RedsAndBlues.GameArea
 {
     public class GameAreaBarrier
     {
-        private const float BarrierWallWidth = 10f;
+        private const float ExtendRatio = 1.2f;
 
         public GameAreaBarrier(EntityManager manager, GameAreaSettings settings)
         {
+            float wallWidth = math.min(settings.Width, settings.Height);
+
             CreateBarrierWall(manager, // left barrier
-                new float3(-settings.Width / 2f - BarrierWallWidth / 2f, 0, 0),
-                new float2(BarrierWallWidth, settings.Height)
+                new float3(-settings.Width / 2f - wallWidth / 2f, 0, 0),
+                new float2(wallWidth, settings.Height * ExtendRatio)
             );
 
             CreateBarrierWall(manager, // right barrier
-                new float3(settings.Width / 2f + BarrierWallWidth / 2f, 0, 0),
-                new float2(BarrierWallWidth, settings.Height)
+                new float3(settings.Width / 2f + wallWidth / 2f, 0, 0),
+                new float2(wallWidth, settings.Height * ExtendRatio)
             );
 
             CreateBarrierWall(manager, // top barrier
-                new float3(0, settings.Height / 2f + BarrierWallWidth / 2f, 0),
-                new float2(settings.Width, BarrierWallWidth)
+                new float3(0, settings.Height / 2f + wallWidth / 2f, 0),
+                new float2(settings.Width * ExtendRatio, wallWidth)
             );
 
             CreateBarrierWall(manager, // bottom barrier
-                new float3(0, -settings.Height / 2f - BarrierWallWidth / 2f, 0),
-                new float2(settings.Width, BarrierWallWidth)
+                new float3(0, -settings.Height / 2f - wallWidth / 2f, 0),
+                new float2(settings.Width * ExtendRatio, wallWidth)
             );
         }
 

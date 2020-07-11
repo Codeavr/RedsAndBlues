@@ -1,4 +1,5 @@
 ﻿using Unity.Mathematics;
+using UnityEngine;
 
 namespace RedsAndBlues.Utils
 {
@@ -50,9 +51,42 @@ namespace RedsAndBlues.Utils
 
             bool collide = sqrDiff <= overlapError;
 
-            overlapAmount = collide ? math.max(0, circleRadius - math.sqrt(sqrDistance) - overlapError) : 0;
+            if (IsPointInAABB(aabbCenter, aabbSize, circleCenter))
+            {
+                var normal = GetAABBNormalFromPoint(aabbCenter, aabbSize, circleCenter);
+
+                var diff = circleCenter - aabbCenter - new float3(halfSize, 0) * normal;
+                overlapAmount = math.length(diff * normal) + circleRadius;
+            }
+            else
+            {
+                overlapAmount = collide ? math.max(0, circleRadius - math.sqrt(sqrDistance) - overlapError) : 0;
+            }
 
             return collide;
+        }
+
+
+        public static bool IsPointInAABB(float3 aabbCenter, float2 aabbSize, float3 point)
+        {
+            return point.x >= aabbCenter.x - aabbSize.x / 2f && point.x <= aabbCenter.x + aabbSize.x / 2f &&
+                   point.y >= aabbCenter.y - aabbSize.y / 2f && point.y <= aabbCenter.y + aabbSize.y / 2f;
+        }
+
+
+        public static float3 GetAABBNormalFromPoint(float3 center, float2 size, float3 point)
+        {
+            var halfSize = size / 2f;
+
+            float normalizedX = math.unlerp(center.x - halfSize.x, center.x + halfSize.x, point.x) * 2 - 1;
+            float normalizedY = math.unlerp(center.y - halfSize.y, center.y + halfSize.y, point.y) * 2 - 1;
+
+            if (math.abs(normalizedX) > math.abs(normalizedY))
+            {
+                return new float3(math.sign(normalizedX), 0, 0);
+            }
+
+            return new float3(0, math.sign(normalizedY), 0);
         }
     }
 }

@@ -13,10 +13,12 @@ namespace RedsAndBlues.ECS.General.Systems
         {
             float deltaTime = Time.DeltaTime;
 
-            Entities.WithAll<IsMovingTag>().ForEach((ref Translation translation, in VelocityComponent velocity) =>
-            {
-                translation.Value += velocity.Value * deltaTime;
-            }).Run();
+            Entities
+                .WithAll<IsMovingTag>()
+                .ForEach((ref Translation translation, in SpeedComponent speed, in MovementDirectionComponent direction) =>
+                    {
+                        translation.Value += direction.Value * speed.Value * deltaTime;
+                    }).Run();
         }
     }
 }

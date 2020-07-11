@@ -11,9 +11,11 @@ namespace RedsAndBlues
         private UiWinPopup _winPopup;
 
         private GameWinObserver _winObserver;
+        private GameBehaviour _game;
 
-        public void Resolve(GameWinObserver gameWinObserver)
+        public void Resolve(GameWinObserver gameWinObserver, GameBehaviour game)
         {
+            _game = game;
             _winObserver = gameWinObserver;
 
             _winObserver.WinnerFoundEvent += OnWinnerFound;
@@ -21,7 +23,11 @@ namespace RedsAndBlues
 
         private void OnWinnerFound(BlobColor color)
         {
-            _winPopup.Show(color, () => _winPopup.gameObject.SetActive(false));
+            _winPopup.Show(color, () =>
+            {
+                _winPopup.gameObject.SetActive(false);
+                _game.StartNewGame();
+            });
             _winPopup.gameObject.SetActive(true);
         }
     }

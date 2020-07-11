@@ -25,17 +25,18 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
             var commandBuffer = _barrier.CreateCommandBuffer();
 
             Entities
+                .WithoutBurst()
                 .WithAll<HandleCollisionWithBounceTag>()
                 .ForEach(
                     (
                         Entity entity,
-                        ref VelocityComponent velocity,
+                        ref MovementDirectionComponent direction,
                         in Translation translation,
                         in CircleColliderComponent collider,
                         in DynamicBuffer<CollisionInfoElementData> collisions
                     ) =>
                     {
-                        var pivot = float3.zero;
+                        var normal = float2.zero;
 
                         for (var index = 0; index < collisions.Length; index++)
                         {
@@ -43,26 +44,23 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
                             if (collision.AnotherLayer == CollisionLayer.Obstacle ||
                                 collision.AnotherLayer == collider.Group)
                             {
-                                pivot += collision.CollisionPivot;
+                                normal += collision.AnotherNormal.xy;
                             }
                         }
 
-                        pivot /= collisions.Length;
+                        normal /= collisions.Length;
 
-                        var direction = math.normalize(translation.Value.xy - pivot.xy);
-                        
-                        if (math.isnan(direction.x))
+                        Debug.DrawRay(translation.Value, new Vector3(normal.x, normal.y, 0), Color.green, 0.01f);
+
+                        if (math.isnan(normal.x))
                         {
                             commandBuffer.RemoveComponent<HandleCollisionWithBounceTag>(entity);
                             return;
                         }
 
-                        var velocity2d = velocity.Value.xy;
-                        var velocity1d = math.length(velocity2d);
+                        var reflection = math.reflect(direction.Value.xy, normal);
 
-                        var reflection = math.reflect(velocity2d / velocity1d, direction) * velocity1d;
-
-                        velocity.Value = new float3(reflection, velocity.Value.z);
+                        direction.Value = new float3(math.normalize(reflection), 0);
 
                         commandBuffer.RemoveComponent<HandleCollisionWithBounceTag>(entity);
                     }).Run();

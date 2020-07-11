@@ -6,6 +6,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace RedsAndBlues.ECS.PhysicsEngine.Systems
@@ -94,7 +95,8 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
                         innerEntity,
                         Translations[j].Value,
                         Colliders[j].Group,
-                        overlapAmount
+                        overlapAmount,
+                        math.normalize(Translations[i].Value - Translations[j].Value)
                     ));
 
                     CommandBuffer.AppendToBuffer(i, innerEntity, new CollisionInfoElementData
@@ -102,7 +104,8 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
                         outerEntity,
                         Translations[i].Value,
                         Colliders[i].Group,
-                        overlapAmount
+                        overlapAmount,
+                        math.normalize(Translations[j].Value - Translations[i].Value)
                     ));
 
                     if (Colliders[i].Group == CollisionLayer.Obstacle ||

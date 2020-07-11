@@ -38,6 +38,7 @@ namespace RedsAndBlues
             _manager.DestroyEntity(blobsQuery);
 
             _winObserver.IsEnabled = false;
+            _blobsSpawner.Reset();
             SetupBlobs();
         }
 

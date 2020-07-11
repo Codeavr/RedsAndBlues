@@ -37,7 +37,7 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
                         for (var i = 0; i < collisionInfos.Length; i++)
                         {
                             var offset = collisionInfos[i].OverlapAmount * 0.5f;
-                            var direction = math.normalize(position - collisionInfos[i].CollisionPivot);
+                            var direction = collisionInfos[i].AnotherNormal;
 
                             position += direction * offset;
                         }

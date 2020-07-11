@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using RedsAndBlues.ECS.General.Components;
-using RedsAndBlues.ECS.General.Tags;
 using RedsAndBlues.ECS.PhysicsEngine;
 using RedsAndBlues.ECS.PhysicsEngine.Components;
-using RedsAndBlues.ECS.PhysicsEngine.Tags;
 using RedsAndBlues.ECS.Rendering;
 using RedsAndBlues.Utils;
 using Unity.Burst;
@@ -22,7 +20,7 @@ namespace RedsAndBlues.Blobs
     {
         private const int MaxFindPositionAttempts = 32;
 
-        public event Action ReachedCapacityEvent;
+        public event System.Action ReachedCapacityEvent;
 
         private EntityArchetype _ballArchetype;
         private EntityManager _manager;
@@ -41,12 +39,18 @@ namespace RedsAndBlues.Blobs
                 typeof(Translation),
                 typeof(CircleColliderComponent),
                 typeof(CollisionInfoElementData),
-                typeof(VelocityComponent),
+                typeof(SpeedComponent),
+                typeof(MovementDirectionComponent),
                 typeof(BlobPropertiesComponent),
                 typeof(LocalToWorld),
                 typeof(SpriteRenderComponent),
                 typeof(Scale)
             );
+        }
+
+        public void Reset()
+        {
+            _spawnedCount = 0;
         }
 
         public void SpawnBlob()
@@ -62,8 +66,8 @@ namespace RedsAndBlues.Blobs
 
             var area = new float2
             (
-                _settings.GameAreaSettings.Width - radius * 2,
-                _settings.GameAreaSettings.Height - radius * 2
+                _settings.GameAreaSettings.Width - radius * 3, // indent in a half of a radius from border
+                _settings.GameAreaSettings.Height - radius * 3
             );
 
             var position = FindSuitablePosition(area, radius) + new float3(0, 0, _settings.ZPosition);
@@ -76,9 +80,14 @@ namespace RedsAndBlues.Blobs
                 Group = isRed ? CollisionLayer.Red : CollisionLayer.Blue
             });
 
-            _manager.SetComponentData(entity, new VelocityComponent
+            _manager.SetComponentData(entity, new MovementDirectionComponent
             {
-                Value = Quaternion.Euler(0, 0, Random.value * 360) * new Vector3(speed, 0f)
+                Value = new float3(Random.insideUnitCircle.normalized, 0)
+            });
+
+            _manager.SetComponentData(entity, new SpeedComponent
+            {
+                Value = speed
             });
 
             _manager.SetComponentData(entity, new Translation

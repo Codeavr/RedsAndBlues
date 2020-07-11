@@ -107,25 +107,33 @@ namespace RedsAndBlues.ECS.PhysicsEngine.Systems
 
             public void Execute(int jobIndex)
             {
-                var circleCollider = CircleColliders[jobIndex];
-                var circleTranslation = CircleTranslations[jobIndex];
+                var circleRadius = CircleColliders[jobIndex].Radius;
+                var circleTranslation = CircleTranslations[jobIndex].Value;
                 var circleEntity = CircleEntities[jobIndex];
 
                 for (int i = 0; i < AABBColliders.Length; i++)
                 {
                     if (PhysicsUtility.DoCirclesAndAABBOverlap
                     (
-                        circleTranslation.Value, circleCollider.Radius,
+                        circleTranslation, circleRadius,
                         AABBTranslations[i].Value, AABBColliders[i].Size,
                         OverlapError, out float3 closestPoint, out float overlapAmount
                     ))
                     {
+                        var normal = PhysicsUtility.GetAABBNormalFromPoint
+                        (
+                            AABBTranslations[i].Value,
+                            AABBColliders[i].Size,
+                            circleTranslation
+                        );
+
                         CommandBuffer.AppendToBuffer(jobIndex, circleEntity, new CollisionInfoElementData
                         (
                             AABBEntities[i],
                             closestPoint,
                             CollisionLayer.Obstacle,
-                            overlapAmount
+                            overlapAmount,
+                            normal
                         ));
 
                         CommandBuffer.AddComponent<HandleCollisionWithBounceTag>(jobIndex, circleEntity);
