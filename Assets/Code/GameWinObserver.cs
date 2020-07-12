@@ -18,6 +18,7 @@ namespace RedsAndBlues
         private EntityQuery _blobsQuery;
         private BlobColor _winningColor;
         private GameBehaviour _gameBehaviour;
+        private bool _winnerFound;
 
         public GameWinObserver(EntityManager manager)
         {
@@ -60,10 +61,15 @@ namespace RedsAndBlues
                 {
                     WinnerFoundEvent?.Invoke(BlobColor.None);
                 }
-                else
+                else if (!_winnerFound)
                 {
+                    _winnerFound = true;
                     WinnerFoundEvent?.Invoke(redCount > blueCount ? BlobColor.Red : BlobColor.Blue);
                 }
+            }
+            else
+            {
+                _winnerFound = false;
             }
 
             colliders.Dispose();

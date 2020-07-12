@@ -7,11 +7,11 @@ namespace RedsAndBlues
     public class CameraZoomToGameAreaBehaviour : MonoBehaviour
     {
         private Camera _camera;
-        private GameAreaSettings _areaSettings;
+        private GameAreaBarrier _barrier;
 
-        public void Resolve(GameAreaSettings areaSettings)
+        public void Resolve(GameAreaBarrier barrier)
         {
-            _areaSettings = areaSettings;
+            _barrier = barrier;
         }
 
         private void Awake()
@@ -21,6 +21,8 @@ namespace RedsAndBlues
 
         private void Update()
         {
+            if (_barrier == null) return;
+
             Scale();
         }
 
@@ -28,7 +30,7 @@ namespace RedsAndBlues
         {
             _camera.orthographicSize = 1;
 
-            var size = new Vector2(_areaSettings.Width, _areaSettings.Height);
+            var size = new Vector2(_barrier.Settings.Width, _barrier.Settings.Height);
 
             var viewportSize = _camera.WorldToViewportPoint(size);
 

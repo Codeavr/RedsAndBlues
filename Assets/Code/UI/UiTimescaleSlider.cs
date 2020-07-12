@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,9 +28,19 @@ namespace RedsAndBlues.UI
         [SerializeField]
         private float _initialValue;
 
+        private SimulationTime _time;
 
-        private void Awake()
+        public void Resolve(SimulationTime time)
         {
+            _time = time;
+        }
+
+        private IEnumerator Start()
+        {
+            yield return new WaitUntil(() => _time != null);
+
+            _time.Speed = _initialValue;
+
             _slider.minValue = _minMaxValues.x;
             _slider.maxValue = _minMaxValues.y;
             _slider.value = _initialValue;
@@ -38,14 +49,28 @@ namespace RedsAndBlues.UI
             Redraw();
         }
 
+        private void Update()
+        {
+            if (_time == null) return;
+
+            if (Math.Abs(_slider.value - _time.Speed) > .0001f)
+            {
+                Redraw();
+            }
+        }
+
         private void Redraw()
         {
-            _currentValueLabel.text = Simulation.Speed.ToString();
+            if (_time == null) return;
+
+            _slider.value = _time.Speed;
+
+            _currentValueLabel.text = _time.Speed.ToString();
 
             _minValueLabel.text = _minMaxValues.x.ToString();
             _maxValueLabel.text = _minMaxValues.y.ToString();
 
-            float t = Mathf.InverseLerp(_minMaxValues.x, _minMaxValues.y, Simulation.Speed);
+            float t = Mathf.InverseLerp(_minMaxValues.x, _minMaxValues.y, _time.Speed);
 
             _currentValueLabel.color = Color.Lerp(_minValueLabel.color, _maxValueLabel.color, t);
         }
@@ -62,7 +87,7 @@ namespace RedsAndBlues.UI
                 value = (float) Math.Round(value, 1, MidpointRounding.AwayFromZero);
             }
 
-            Simulation.Speed = Mathf.Clamp(value, _minMaxValues.x, _minMaxValues.y);
+            _time.Speed = Mathf.Clamp(value, _minMaxValues.x, _minMaxValues.y);
 
             Redraw();
         }
@@ -71,7 +96,7 @@ namespace RedsAndBlues.UI
         {
             if (Application.isPlaying) return;
 
-            _slider.value = Simulation.Speed;
+            _slider.value = _initialValue;
 
             _slider.minValue = _minMaxValues.x;
             _slider.maxValue = _minMaxValues.y;

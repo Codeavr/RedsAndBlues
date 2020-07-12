@@ -8,7 +8,10 @@ namespace RedsAndBlues.UI
     public class UiWinPopup : MonoBehaviour
     {
         [SerializeField]
-        private UiLabel _uiLabel;
+        private UiLabel _winnerColorLabel;
+
+        [SerializeField]
+        private UiLabel _simulationTimeLabel;
 
         [SerializeField]
         private Button _okButton;
@@ -25,10 +28,11 @@ namespace RedsAndBlues.UI
             _okButtonCallback?.Invoke();
         }
 
-        public void Show(BlobColor winnerColor, Action okButtonCallback)
+        public void Show(BlobColor winnerColor, int simulationDuration, Action okButtonCallback)
         {
             _okButtonCallback = okButtonCallback;
-            _uiLabel.SetValue(winnerColor.ToString());
+            _winnerColorLabel.SetValue(winnerColor.ToString());
+            _simulationTimeLabel.SetValue(simulationDuration.ToString());
         }
     }
 }

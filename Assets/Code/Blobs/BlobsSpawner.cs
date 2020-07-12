@@ -27,9 +27,12 @@ namespace RedsAndBlues.Blobs
         private int _spawnedCount;
         private EntityQuery _circlesQuery;
         private BlobsSpawningSettings _settings;
+        private SimulationTime _time;
 
-        public BlobsSpawner(EntityManager manager, BlobsSpawningSettings blobsSpawningSettings)
+        public BlobsSpawner(EntityManager manager, BlobsSpawningSettings blobsSpawningSettings,
+            SimulationTime time)
         {
+            _time = time;
             _settings = blobsSpawningSettings;
             _manager = manager;
             _circlesQuery = _manager.CreateEntityQuery(typeof(CircleColliderComponent), typeof(Translation));
@@ -112,17 +115,17 @@ namespace RedsAndBlues.Blobs
 
         public IEnumerator StartDelayedSpawningRoutine()
         {
-            float nextSpawnTime = Time.time - Mathf.Epsilon;
+            float nextSpawnTime = _time.ElapsedTime - Mathf.Epsilon;
 
             for (int i = 0; i < _settings.Capacity; i++)
             {
-                while (Time.time < nextSpawnTime)
+                while (_time.ElapsedTime < nextSpawnTime)
                 {
                     yield return null;
                 }
 
                 SpawnBlob();
-                nextSpawnTime += _settings.Delay / Simulation.Speed;
+                nextSpawnTime += _settings.Delay;
             }
 
             ReachedCapacityEvent?.Invoke();

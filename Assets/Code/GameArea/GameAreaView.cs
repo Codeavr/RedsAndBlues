@@ -13,7 +13,26 @@ namespace RedsAndBlues.GameArea
         [SerializeField]
         private Vector2 _sizeOffset;
 
-        public void Resolve(GameAreaSettings settings)
+        private GameAreaBarrier _barrier;
+
+        public void Resolve(GameAreaBarrier barrier)
+        {
+            _barrier = barrier;
+
+            _barrier.RebuildEvent += OnBarrierRebuild;
+            
+            if (barrier.IsBuild)
+            {
+                OnBarrierRebuild();
+            }
+        }
+
+        private void OnBarrierRebuild()
+        {
+            Rescale(_barrier.Settings);
+        }
+
+        private void Rescale(GameAreaSettings settings)
         {
             var finalSize = _baseSize;
             finalSize.Scale(new Vector2(settings.Width, settings.Height));

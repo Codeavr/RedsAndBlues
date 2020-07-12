@@ -1,5 +1,8 @@
-﻿namespace RedsAndBlues.GameArea
+﻿using System;
+
+namespace RedsAndBlues.GameArea
 {
+    [Serializable]
     public struct GameAreaSettings
     {
         public float Width;

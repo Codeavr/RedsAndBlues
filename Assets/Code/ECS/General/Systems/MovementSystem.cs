@@ -9,9 +9,16 @@ namespace RedsAndBlues.ECS.General.Systems
     [UpdateInGroup(typeof(SimulationSystemGroup)), UsedImplicitly]
     public class MovementSystem : SystemBase
     {
+        private SimulationTime _time;
+
+        public void Resolve(SimulationTime time)
+        {
+            _time = time;
+        }
+        
         protected override void OnUpdate()
         {
-            float deltaTime = Time.DeltaTime * Simulation.Speed;
+            float deltaTime = _time.DeltaTime;
 
             Entities
                 .WithAll<IsMovingTag>()

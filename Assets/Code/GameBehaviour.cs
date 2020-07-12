@@ -2,6 +2,7 @@
 using RedsAndBlues.ECS.General.Components;
 using RedsAndBlues.ECS.General.Tags;
 using RedsAndBlues.ECS.PhysicsEngine.Systems;
+using RedsAndBlues.GameArea;
 using RedsAndBlues.UI;
 using Unity.Entities;
 using UnityEngine;

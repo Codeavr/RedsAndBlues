@@ -12,9 +12,11 @@ namespace RedsAndBlues
 
         private GameWinObserver _winObserver;
         private GameBehaviour _game;
+        private SimulationTime _time;
 
-        public void Resolve(GameWinObserver gameWinObserver, GameBehaviour game)
+        public void Resolve(GameWinObserver gameWinObserver, GameBehaviour game, SimulationTime time)
         {
+            _time = time;
             _game = game;
             _winObserver = gameWinObserver;
 
@@ -23,7 +25,7 @@ namespace RedsAndBlues
 
         private void OnWinnerFound(BlobColor color)
         {
-            _winPopup.Show(color, () =>
+            _winPopup.Show(color, Mathf.CeilToInt(_time.ElapsedTime), () =>
             {
                 _winPopup.gameObject.SetActive(false);
                 _game.StartNewGame();
