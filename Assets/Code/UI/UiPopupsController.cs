@@ -1,9 +1,7 @@
-﻿using System;
-using RedsAndBlues.Blobs;
-using RedsAndBlues.UI;
+﻿using RedsAndBlues.Blobs;
 using UnityEngine;
 
-namespace RedsAndBlues
+namespace RedsAndBlues.UI
 {
     public class UiPopupsController : MonoBehaviour
     {

@@ -1,11 +1,10 @@
 ﻿using System;
 using RedsAndBlues.GameArea;
-using RedsAndBlues.Saving;
 using RedsAndBlues.Utils;
 using Unity.Entities;
 using UnityEngine;
 
-namespace RedsAndBlues
+namespace RedsAndBlues.Saving
 {
     public class GameSaveSystem
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using RedsAndBlues.GameArea;
 
-namespace RedsAndBlues
+namespace RedsAndBlues.Saving
 {
     [Serializable]
     public struct GameSaveData

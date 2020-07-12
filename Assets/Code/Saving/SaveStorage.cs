@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RedsAndBlues
+namespace RedsAndBlues.Saving
 {
     public class SaveStorage
     {

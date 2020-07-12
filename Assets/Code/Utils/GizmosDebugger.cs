@@ -5,7 +5,7 @@ using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
 
-namespace RedsAndBlues
+namespace RedsAndBlues.Utils
 {
     public class GizmosDebugger : MonoBehaviour
     {
